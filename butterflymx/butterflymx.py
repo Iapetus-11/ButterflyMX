@@ -156,8 +156,8 @@ class ButterflyMX:
                     "swipeToOpen",
                     {
                         "input": {
-                            "tenantId": 'prod-tenant-3170275',
-                            "accessPointId": "prod-access_point-6173",
+                            "tenantId": tenant,
+                            "accessPointId": access_point,
                             "deviceId": None,
                             "clientMutationId": str(uuid.uuid4()),
                         }
