@@ -82,7 +82,6 @@ class ButterflyMXRequestClient:
         )
 
         # Fetch authenticity token from login page
-        # 3
         response = await self.request(
             'GET', 'https://accounts.butterflymx.com/login/new', authenticate=False
         )
@@ -93,7 +92,6 @@ class ButterflyMXRequestClient:
         assert isinstance(authenticity_token_input, bs4.Tag)
 
         # Submit email and password
-        # 7
         response = await self.request(
             'POST',
             'https://accounts.butterflymx.com/login',
@@ -116,7 +114,6 @@ class ButterflyMXRequestClient:
         )
 
         # Oauth flow
-        # 8
         response = await self.request(
             'GET',
             response.headers['Location'],
