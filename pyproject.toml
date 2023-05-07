@@ -1,9 +1,11 @@
 [tool.poetry]
 name = "butterflymx"
-version = "0.1.0"
+version = "0.1.1"
 description = "A reverse-engineered ButterflyMX app API wrapper"
 authors = ["Milo Weinberg <iapetus011@gmail.com>"]
 readme = "README.md"
+repository = "https://github.com/Iapetus-11/ButterflyMX"
+keywords = ["butterflymx", "butterflymx-api", "butterflymx-graphql"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -29,4 +31,3 @@ explicit_package_bases = true
 
 [tool.ruff]
 line-length = 100
-
