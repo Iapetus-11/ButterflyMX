@@ -33,26 +33,14 @@ class ButterflyMXRequestClient:
         self.__email_and_password = email_and_password
         self.__refresh_token = refresh_token
 
-        self.__access_token: str | None = None
-        self.__access_token_expires_at: float | None = None
-
-        if access_token is not None:
-            self.__access_token = access_token.token
-            self.__access_token_expires_at = access_token.expires_at
+        self.__access_token = access_token
 
     @property
-    def access_token(self) -> str:
+    def access_token(self) -> AccessToken:
         if self.__access_token is None:
             raise RuntimeError('access_token has not yet been initialized.')
 
         return self.__access_token
-
-    @property
-    def access_token_expires_at(self) -> float:
-        if self.__access_token_expires_at is None:
-            raise RuntimeError('access_token_expires_at has not yet been initialized.')
-
-        return self.__access_token_expires_at
 
     @property
     def refresh_token(self) -> str:
@@ -177,8 +165,7 @@ class ButterflyMXRequestClient:
     async def ensure_access_token(self) -> None:
         if (
             self.__access_token is None
-            or self.__access_token_expires_at is None
-            or time.time() > self.__access_token_expires_at
+            or time.time() > self.access_token.expires_at
         ):
             access_token: AccessToken
             refresh_token: str
@@ -188,8 +175,7 @@ class ButterflyMXRequestClient:
             else:
                 (access_token, refresh_token) = await self.__oauth_refresh()
 
-            self.__access_token = access_token.token
-            self.__access_token_expires_at = access_token.expires_at
+            self.__access_token = access_token
             self.__refresh_token = refresh_token
 
     async def request(
@@ -209,7 +195,7 @@ class ButterflyMXRequestClient:
 
         if authenticate:
             await self.ensure_access_token()
-            headers['Authorization'] = self.access_token
+            headers['Authorization'] = self.access_token.token
 
         return await self.__http.request(
             method, url, data=data, json=json, params=params, headers=headers, **kwargs
