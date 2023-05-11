@@ -29,7 +29,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: .venv
-          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-${{ matrix.python-version }}
+          key: venv-${{ runner.os }}-${{ hashFiles('**/pyproject.toml') }}-${{ matrix.python-version }}
 
       - name: Install dependencies
         run: poetry install
