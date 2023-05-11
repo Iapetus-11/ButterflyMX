@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "butterflymx"
-version = "0.1.1"
+version = "0.1.2"
 description = "A reverse-engineered ButterflyMX app API wrapper"
 authors = ["Milo Weinberg <iapetus011@gmail.com>"]
 readme = "README.md"
