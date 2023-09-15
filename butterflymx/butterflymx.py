@@ -19,12 +19,13 @@ from butterflymx.request_client import ButterflyMXRequestClient
 
 class ButterflyMX:
     def __init__(
-            self,
-            *,
-            oauth_credentials: OauthCredentials | None = None,
-            email_and_password: EmailAndPassword | None = None,
-            access_token: AccessToken | None = None,
-            refresh_token: str | None = None,
+        self,
+        *,
+        oauth_credentials: OauthCredentials | None = None,
+        email_and_password: EmailAndPassword | None = None,
+        access_token: AccessToken | None = None,
+        refresh_token: str | None = None,
+        http_extra: dict[str, Any] | None = None,
     ):
         self.__oauth_credentials = oauth_credentials
         self.__email_and_password = email_and_password
@@ -32,6 +33,7 @@ class ButterflyMX:
         self.__refresh_token = refresh_token
 
         self.__http: aiohttp.ClientSession | None = None
+        self.__http_extra = http_extra
         self.__client: ButterflyMXRequestClient | None = None
 
     @property
@@ -42,7 +44,7 @@ class ButterflyMX:
         return self.__client
 
     async def __aenter__(self) -> ButterflyMX:
-        self.__http = aiohttp.ClientSession()
+        self.__http = aiohttp.ClientSession(**(self.__http_extra or {}))
 
         self.__client = ButterflyMXRequestClient(
             http=self.__http,
